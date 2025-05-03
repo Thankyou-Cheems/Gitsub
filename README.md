@@ -14,6 +14,12 @@ Example:
 gitsub clone https://github.com/tensorflow/tensorflow tensorflow/core
 ```
 
+Or pass a GitHub directory URL directly:
+
+```bash
+gitsub clone https://github.com/tensorflow/tensorflow/tree/master/tensorflow/core
+```
+
 ## Requirements
 
 - Git 2.25+

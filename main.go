@@ -38,22 +38,33 @@ func runClone(args []string) error {
 	}
 
 	rest := fs.Args()
-	if len(rest) < 2 {
+	if len(rest) < 1 {
 		printCloneUsage()
 		return fmt.Errorf("missing required arguments")
-	}
-
-	repoURL := rest[0]
-	directories := rest[1:]
-
-	if err := ValidateRepoURL(repoURL); err != nil {
-		return err
 	}
 
 	branch := firstNonEmpty(*branchShort, *branchLong)
 	output := firstNonEmpty(*outputShort, *outputLong)
 
 	if err := CheckGitVersion(); err != nil {
+		return err
+	}
+
+	repoURL, directories, parsedBranch, ok := ParseGitHubDirURL(rest)
+	if ok {
+		if branch == "" {
+			branch = parsedBranch
+		}
+	} else {
+		if len(rest) < 2 {
+			printCloneUsage()
+			return fmt.Errorf("missing required arguments")
+		}
+		repoURL = rest[0]
+		directories = rest[1:]
+	}
+
+	if err := ValidateRepoURL(repoURL); err != nil {
 		return err
 	}
 
