@@ -24,6 +24,11 @@ gitsub clone https://github.com/tensorflow/tensorflow/tree/master/tensorflow/cor
 
 - Git 2.25+
 
+## Web Tool (GitHub Pages)
+
+The static web tool lives in `docs/`. To publish via GitHub Pages, set the
+repository's Pages source to the `docs/` folder on the `main` branch.
+
 ## How it works
 
 Gitsub uses sparse checkout with partial clone:
