@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"gitsub/pkg/gitsub"
 	"os"
 )
 
@@ -46,11 +47,11 @@ func runClone(args []string) error {
 	branch := firstNonEmpty(*branchShort, *branchLong)
 	output := firstNonEmpty(*outputShort, *outputLong)
 
-	if err := CheckGitVersion(); err != nil {
+	if err := gitsub.CheckGitVersion(); err != nil {
 		return err
 	}
 
-	repoURL, directories, parsedBranch, ok := ParseGitHubDirURL(rest)
+	repoURL, directories, parsedBranch, ok := gitsub.ParseGitHubDirURL(rest)
 	if ok {
 		if branch == "" {
 			branch = parsedBranch
@@ -64,11 +65,11 @@ func runClone(args []string) error {
 		directories = rest[1:]
 	}
 
-	if err := ValidateRepoURL(repoURL); err != nil {
+	if err := gitsub.ValidateRepoURL(repoURL); err != nil {
 		return err
 	}
 
-	return Clone(repoURL, directories, branch, output)
+	return gitsub.Clone(repoURL, directories, branch, output)
 }
 
 func printUsage() {

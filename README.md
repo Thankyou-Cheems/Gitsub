@@ -23,6 +23,13 @@ gitsub clone https://github.com/tensorflow/tensorflow/tree/master/tensorflow/cor
 ## Requirements
 
 - Git 2.25+
+- Go 1.21+ (to build)
+
+## Build
+
+```bash
+go build ./cmd/gitsub
+```
 
 ## Web Tool (GitHub Pages)
 
