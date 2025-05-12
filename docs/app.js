@@ -1,4 +1,4 @@
-const modeButtons = document.querySelectorAll(".mode-btn");
+const modeButtons = document.querySelectorAll(".tab-btn");
 const urlPanel = document.querySelector(".panel-url");
 const repoPanel = document.querySelector(".panel-repo");
 const urlInput = document.getElementById("urlInput");
@@ -106,6 +106,7 @@ function updateCommand() {
   const { cmd, msg } = buildCommand();
   commandOutput.textContent = cmd;
   message.textContent = msg;
+  message.classList.toggle("visible", !!msg);
 }
 
 function copyCommand() {

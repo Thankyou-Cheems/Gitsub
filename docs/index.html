@@ -1,122 +1,117 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Gitsub Web Tool</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="noise"></div>
-    <header class="hero">
-      <div class="hero-inner">
-        <p class="eyebrow">Gitsub Web Tool</p>
-        <h1>Clone only what you need, fast.</h1>
-        <p class="lead">
-          Paste a GitHub directory URL or a repo + path list and generate the exact
-          Gitsub command to run locally.
-        </p>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gitsub - Smart Partial Cloner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="background-glob"></div>
+  <div class="overlay"></div>
+
+  <header class="navbar">
+    <div class="logo">Gitsub</div>
+    <a href="https://github.com" target="_blank" class="nav-link">GitHub</a>
+  </header>
+
+  <main class="main-content">
+    <div class="hero">
+      <h1 class="hero-title">
+        Clone only <br />
+        <span class="text-gradient">what you need.</span>
+      </h1>
+      <p class="hero-desc">
+        The smart partial cloning tool for large repositories. Paste a URL, get the command.
+      </p>
+    </div>
+
+    <div class="app-container glass-panel">
+      <div class="tabs">
+        <button class="tab-btn is-active" data-mode="url">GitHub URL</button>
+        <button class="tab-btn" data-mode="repo">Manual Input</button>
       </div>
-    </header>
 
-    <main class="container">
-      <section class="card">
-        <div class="mode">
-          <button class="mode-btn is-active" data-mode="url">GitHub URL</button>
-          <button class="mode-btn" data-mode="repo">Repo + Paths</button>
+      <div class="panel panel-url is-active">
+        <div class="input-group">
+          <label for="urlInput">Directory or Blob URL</label>
+          <input id="urlInput" type="text" placeholder="https://github.com/owner/repo/tree/main/src/utils"
+            autocomplete="off" />
         </div>
-
-        <div class="panel panel-url is-active">
-          <label for="urlInput">GitHub directory or file URL</label>
-          <input
-            id="urlInput"
-            type="text"
-            placeholder="https://github.com/owner/repo/tree/main/path/to/dir"
-            autocomplete="off"
-          />
-          <div class="hint">Supports <code>tree</code> and <code>blob</code> URLs.</div>
-
-          <div class="row">
-            <div class="col">
-              <label for="outputInput">Output directory (optional)</label>
-              <input id="outputInput" type="text" placeholder="my-repo" autocomplete="off" />
-            </div>
-          </div>
+        <div class="input-group">
+          <label for="outputInput">Output Directory (Optional)</label>
+          <input id="outputInput" type="text" placeholder="e.g. utils-lib" autocomplete="off" />
         </div>
+      </div>
 
-        <div class="panel panel-repo">
+      <div class="panel panel-repo">
+        <div class="input-group">
           <label for="repoInput">Repository URL</label>
-          <input
-            id="repoInput"
-            type="text"
-            placeholder="https://github.com/owner/repo"
-            autocomplete="off"
-          />
-
-          <label for="pathsInput">Directories (space-separated)</label>
-          <input id="pathsInput" type="text" placeholder="src/app docs" autocomplete="off" />
-
-          <div class="row">
-            <div class="col">
-              <label for="branchInput">Branch (optional)</label>
-              <input id="branchInput" type="text" placeholder="main" autocomplete="off" />
-            </div>
-            <div class="col">
-              <label for="outputInput2">Output directory (optional)</label>
-              <input id="outputInput2" type="text" placeholder="my-repo" autocomplete="off" />
-            </div>
+          <input id="repoInput" type="text" placeholder="https://github.com/owner/repo" autocomplete="off" />
+        </div>
+        <div class="input-group">
+          <label for="pathsInput">Directories (space separated)</label>
+          <input id="pathsInput" type="text" placeholder="src/assets src/components" autocomplete="off" />
+        </div>
+        <div class="row">
+          <div class="input-group col">
+            <label for="branchInput">Branch</label>
+            <input id="branchInput" type="text" placeholder="main" autocomplete="off" />
+          </div>
+          <div class="input-group col">
+            <label for="outputInput2">Output Dir</label>
+            <input id="outputInput2" type="text" placeholder="target-dir" autocomplete="off" />
           </div>
         </div>
+      </div>
 
-        <div class="result">
-          <div class="result-header">
-            <span>Command</span>
-            <button id="copyBtn" class="ghost">Copy</button>
-          </div>
-          <pre id="commandOutput">gitsub clone …</pre>
-          <div id="message" class="message"></div>
+      <div class="result-area">
+        <div class="result-label">Generated Command</div>
+        <div class="command-box">
+          <pre id="commandOutput">gitsub clone ...</pre>
+          <button id="copyBtn" class="action-btn">
+            <span class="btn-text">Copy</span>
+          </button>
         </div>
-      </section>
+        <div id="message" class="status-message"></div>
+      </div>
+    </div>
 
-      <section class="grid">
-        <div class="card">
-          <h2>What you get</h2>
-          <ul>
-            <li>Exact command to run locally.</li>
-            <li>Auto-detected repo, branch, and path from GitHub URLs.</li>
-            <li>Works for large repos without full clone.</li>
-          </ul>
+    <div class="features-grid">
+      <div class="feature-card glass-panel">
+        <h3>⚡️ Blazing Fast</h3>
+        <p>Uses <code>git sparse-checkout</code> to fetch only the files you requested, saving time and bandwidth.</p>
+      </div>
+      <div class="feature-card glass-panel">
+        <h3>🎯 Precision</h3>
+        <p>Auto-detects repository root, branch, and target paths directly from standard GitHub URLs.</p>
+      </div>
+      <div class="feature-card glass-panel">
+        <h3>📂 Examples</h3>
+        <div class="chips">
+          <button class="chip" data-example="https://github.com/tensorflow/tensorflow/tree/master/tensorflow/core">
+            TensorFlow Core
+          </button>
+          <button class="chip" data-example="https://github.com/golang/go/tree/master/src/net/http">
+            Go Net/HTTP
+          </button>
         </div>
-        <div class="card">
-          <h2>Example URLs</h2>
-          <div class="chips">
-            <button class="chip" data-example="https://github.com/tensorflow/tensorflow/tree/master/tensorflow/core">
-              TensorFlow core
-            </button>
-            <button class="chip" data-example="https://github.com/golang/go/tree/master/src/net/http">
-              Go net/http
-            </button>
-            <button class="chip" data-example="https://github.com/kubernetes/kubernetes/blob/master/README.md">
-              Kubernetes README
-            </button>
-          </div>
-        </div>
-      </section>
+      </div>
+    </div>
+  </main>
 
-      <section class="card">
-        <h2>How it works</h2>
-        <p>
-          Gitsub uses Git sparse checkout and partial clone to fetch only selected
-          directories. The web tool simply formats the right command and inputs.
-        </p>
-        <code class="codeblock">git clone --filter=blob:none --sparse &lt;repo&gt;</code>
-      </section>
-    </main>
+  <footer class="footer">
+    <p>Designed for Gitsub.</p>
+  </footer>
 
-    <footer class="footer">
-      <p>Built for GitHub Pages. No tracking. No backend.</p>
-    </footer>
+  <script src="app.js"></script>
+</body>
 
-    <script src="app.js"></script>
-  </body>
 </html>
